@@ -1,6 +1,6 @@
 # $File: //ASP/tec/gui/qeMonitor/trunk/qeMonitorApp/Makefile $
-# $Revision: #1 $
-# $DateTime: 2016/11/06 13:05:22 $
+# $Revision: #2 $
+# $DateTime: 2017/05/01 17:24:01 $
 # Last checked in by: $Author: starritt $
 #
 # This make file is the bridge beween the EPICS build system and the Qt project qmake/make paradigm.
@@ -54,7 +54,7 @@ install: $(TARGET)
 $(TARGET) : $(SOURCE_DIR)/$(MAKEFILE)  always
 	@echo "=== Building $(BINFILE) application"                 && \
 	cd  $(SOURCE_DIR)                                           && \
-	make -j3  -f $(MAKEFILE)                                    && \
+	$(MAKE) -j3  -f $(MAKEFILE)                                 && \
 	echo "=== Complete"
 
 
@@ -68,7 +68,7 @@ $(SOURCE_DIR)/$(MAKEFILE) : $(SOURCE_DIR)/$(PROJECT)
 # Note the : "command" is a null command in bash.
 #
 clean:
-	cd  $(SOURCE_DIR) && test -f $(MAKEFILE) && make -f $(MAKEFILE) clean && $(RM) $(MAKEFILE) || $(NOOP)
+	cd  $(SOURCE_DIR) && test -f $(MAKEFILE) && $(MAKE) -f $(MAKEFILE) clean && $(RM) $(MAKEFILE) || $(NOOP)
 
 
 uninstall:
