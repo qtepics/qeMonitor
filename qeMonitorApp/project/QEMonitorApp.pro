@@ -1,6 +1,6 @@
 # $File: //ASP/tec/gui/qeMonitor/trunk/qeMonitorApp/project/QEMonitorApp.pro $
-# $Revision: #2 $
-# $DateTime: 2016/11/06 13:05:22 $
+# $Revision: #3 $
+# $DateTime: 2017/07/07 12:01:14 $
 # Last checked in by: $Author: starritt $
 #
 #
@@ -107,7 +107,7 @@ LIBS += -L$$(EPICS_BASE)/lib/$$(EPICS_HOST_ARCH) -lca -lCom
 #
 unix: QMAKE_LFLAGS += -Wl,-rpath,$$(EPICS_BASE)/lib/$$(EPICS_HOST_ARCH)
 
-LIBS += -L$$(QE_FRAMEWORK)/lib/$$(EPICS_HOST_ARCH) -lQEPlugin
+LIBS += -L$$(QE_FRAMEWORK)/lib/$$(EPICS_HOST_ARCH) -lQEFramework
 unix: QMAKE_LFLAGS += -Wl,-rpath,$$(QE_FRAMEWORK)/lib/$$(EPICS_HOST_ARCH)
 
 # end
