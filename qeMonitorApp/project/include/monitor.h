@@ -1,5 +1,9 @@
-/*
- *  This file is part of the EPICS QT Framework, initially developed at the Australian Synchrotron.
+/*  monitor.h
+ *
+ *  This file is part of the EPICS QT Framework, initially developed at the
+ *  Australian Synchrotron.
+ *
+ *  Copyright (c) 2009, 2010 Australian Synchrotron
  *
  *  The EPICS QT Framework is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -14,25 +18,23 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with the EPICS QT Framework.  If not, see <http://www.gnu.org/licenses/>.
  *
- *  Copyright (c) 2009, 2010 Australian Synchrotron
- *
  *  Author:
  *    Andrew Rhyder
  *  Contact details:
  *    andrew.rhyder@synchrotron.org.au
  */
 
-#ifndef MONITOR_H
-#define MONITOR_H
+#ifndef QE_MONITOR_H
+#define QE_MONITOR_H
 
 #define MONITOR_STRINGS
 //#define MONITOR_INTEGERS
 //#define MONITOR_FLOATING
 
 #include <QObject>
-#include <QEString.h>   // Normal
-#include <QEInteger.h>  // Integer only output
-#include <QEFloating.h>  // Floating only output
+#include <QEString.h>     // Normal
+#include <QEInteger.h>    // Integer only output
+#include <QEFloating.h>   // Floating only output
 #include <UserMessage.h>
 
 /*
@@ -67,11 +69,11 @@ private:
     void newMessage( QString msg, message_types type );
 
 private slots:
-    void connectionChanged( QCaConnectionInfo& );
+    void connectionChanged( QCaConnectionInfo&, const unsigned int & );
     void log( const QString& data, QCaAlarmInfo& alarmInfo, QCaDateTime& timeStamp, const unsigned int & );
     void log( const long& data, QCaAlarmInfo& alarmInfo, QCaDateTime& timeStamp, const unsigned int & );
     void log( const double& value, QCaAlarmInfo& alarmInfo, QCaDateTime& timeStamp, const unsigned int & );
     void log( const QVector<double>& values, QCaAlarmInfo& alarmInfo, QCaDateTime& timeStamp, const unsigned int & );
 };
 
-#endif // MONITOR_H
+#endif // QE_MONITOR_H

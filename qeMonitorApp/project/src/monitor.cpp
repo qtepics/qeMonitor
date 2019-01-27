@@ -1,5 +1,9 @@
-/*
- *  This file is part of the EPICS QT Framework, initially developed at the Australian Synchrotron.
+/*  monitor.cpp
+ *
+ *  This file is part of the EPICS QT Framework, initially developed at the
+ *  Australian Synchrotron.
+ *
+ *  Copyright (c) 2009, 2010 Australian Synchrotron
  *
  *  The EPICS QT Framework is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -14,8 +18,6 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with the EPICS QT Framework.  If not, see <http://www.gnu.org/licenses/>.
  *
- *  Copyright (c) 2009, 2010 Australian Synchrotron
- *
  *  Author:
  *    Andrew Rhyder
  *  Contact details:
@@ -29,9 +31,9 @@
 // to play with QEInteger instead. Look for references to QEString and QEInteger
 // in this class.
 
+#include "monitor.h"
 #include <QTime>
 #include <QString>
-#include <monitor.h>
 
 monitor::monitor( QString pvIn )
 {
@@ -46,37 +48,37 @@ monitor::monitor( QString pvIn )
     // Normal
     source = new QEString( pv, this, &stringFormatting, 0, &messages );
     QObject::connect( source, SIGNAL( stringChanged( const QString&, QCaAlarmInfo&, QCaDateTime&, const unsigned int & ) ),
-                      this, SLOT( log( const QString&, QCaAlarmInfo&, QCaDateTime&, const unsigned int & ) ) );
+                      this,   SLOT(   log          ( const QString&, QCaAlarmInfo&, QCaDateTime&, const unsigned int & ) ) );
+    QObject::connect( source, SIGNAL( connectionChanged( QCaConnectionInfo&, const unsigned int & ) ),
+                      this,   SLOT(   connectionChanged( QCaConnectionInfo&, const unsigned int & ) ) );
 #endif
 
 #ifdef MONITOR_INTEGERS
     // Integer only output
     source = new QEInteger( pv, this, &integerFormatting, 0, &messages );
     QObject::connect( source, SIGNAL( integerChanged( const long&, QCaAlarmInfo&, QCaDateTime&, const unsigned int & ) ),
-                      this, SLOT( log( const long&, QCaAlarmInfo&, QCaDateTime&, const unsigned int & ) ) );
+                      this,   SLOT(   log           ( const long&, QCaAlarmInfo&, QCaDateTime&, const unsigned int & ) ) );
 #endif
 
 #ifdef MONITOR_FLOATING
     // Floating only output
     source = new QEFloating( pv, this, &floatingFormatting, 0, &messages );
     QObject::connect( source, SIGNAL( floatingChanged( const double&, QCaAlarmInfo&, QCaDateTime&, const unsigned int & ) ),
-                      this, SLOT( log( const double&, QCaAlarmInfo&, QCaDateTime&, const unsigned int & ) ) );
+                      this,   SLOT(   log(             const double&, QCaAlarmInfo&, QCaDateTime&, const unsigned int & ) ) );
     QObject::connect( source, SIGNAL( floatingArrayChanged( const QVector<double>&, QCaAlarmInfo&, QCaDateTime&, const unsigned int & ) ),
-                      this, SLOT( log( const QVector<double>&, QCaAlarmInfo&, QCaDateTime&, const unsigned int & ) ) );
-    QObject::connect( source, SIGNAL( connectionChanged( QCaConnectionInfo& ) ),
-                      this, SLOT( connectionChanged( QCaConnectionInfo& ) ) );
+                      this,   SLOT(   log(                  const QVector<double>&, QCaAlarmInfo&, QCaDateTime&, const unsigned int & ) ) );
+    QObject::connect( source, SIGNAL( connectionChanged( QCaConnectionInfo&, const unsigned int & ) ),
+                      this,   SLOT(   connectionChanged( QCaConnectionInfo&, const unsigned int & ) ) );
 #endif
 
     source->subscribe();
 }
 
 // Log connection issues
-void monitor::connectionChanged( QCaConnectionInfo& connectionInfo )
+void monitor::connectionChanged( QCaConnectionInfo& connectionInfo, const unsigned int & )
 {
     if( !connectionInfo.isChannelConnected() )
         *stream << QString( "%1: %2   Channel not connected\n").arg( QTime::currentTime().toString() ).arg( pv );
-    if( !connectionInfo.isLinkUp() )
-        *stream << QString( "%1: %2   Link not up\n").arg( QTime::currentTime().toString() ).arg( pv );
 
     stream->flush();
 }
@@ -121,3 +123,5 @@ void monitor::newMessage( QString msg, message_types )
     *stream << QString( "%1 %2   %3\n").arg( QTime::currentTime().toString() ).arg( pv ).arg( msg );
     stream->flush();
 }
+
+// end
