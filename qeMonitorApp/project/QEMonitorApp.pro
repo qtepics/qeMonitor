@@ -1,7 +1,6 @@
-# $File: //ASP/tec/gui/qeMonitor/trunk/qeMonitorApp/project/QEMonitorApp.pro $
-# $Revision: #4 $
-# $DateTime: 2024/08/15 11:32:45 $
-# Last checked in by: $Author: starritt $
+# File: qeMonitorApp/project/QEMonitorApp.pro
+# DateTime: Mon May 26 17:12:02 2025
+# Last checked in by: starritt
 #
 #
 #    This file is part of the EPICS QT Framework, initially developed at the

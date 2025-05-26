@@ -16,3 +16,4 @@ include/
 *.pro.user
 Makefile.*
 object_script.*
+*~
